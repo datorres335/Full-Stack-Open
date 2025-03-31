@@ -92,9 +92,19 @@ const App = () => {
 
     const inputName = newName.trim()
     const inputNumber = newNumber.trim()
-    if (persons.some(person => person.name === inputName || person.number === inputNumber)){
-      alert(`${newName} or ${newNumber} is already on the phonebook`)
-      //setNewName('')
+    if (persons.some(person => person.name === inputName && person.number !== inputNumber)){
+      if (window.confirm(`${inputName} is already added to phonebook, replace the old number with a new one?`)) {
+        const personToUpdate = persons.find(person => person.name === inputName)
+        const changedPhoneNumber = {...personToUpdate, number: inputNumber}
+
+        personService
+        .update(personToUpdate.id, changedPhoneNumber)
+        .then(() => {
+          setPersons(prevPersons =>
+            prevPersons.map(person => person.id !== personToUpdate.id ? person : changedPhoneNumber)
+          )
+        })
+      }
     }
     else {
       const nameObject = {
