@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 
 const Persons = ({ filteredResults }) => {
   return (
@@ -28,14 +28,16 @@ const Filter = ({newFilter, handleFilterChange}) => {
 }
 
 const PersonForm = ({addNameNumber, newName, handleNameChange, newNumber, handleNumberChange}) => {
-  <form onSubmit={addNameNumber}>
-        <div>name: <input value={newName} onChange={handleNameChange}/></div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange}/></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-}
+  return (
+    <form onSubmit={addNameNumber}>
+      <div>name: <input value={newName} onChange={handleNameChange}/></div>
+      <div>number: <input value={newNumber} onChange={handleNumberChange}/></div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form>
+  );
+};
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -45,12 +47,10 @@ const App = () => {
 
   useEffect(() => {
     console.log('Effect activated')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('Promise fulfilled')
-        setPersons(response.data)
-        //console.log(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
@@ -85,22 +85,26 @@ const App = () => {
         name: newName,
         number: newNumber
       }
-      
-      setPersons(persons.concat(nameObject))
-      setNewName('')
-      setNewNumber('')
+
+      personService
+        .create(nameObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })      
     }
   }
 
   const handleNameChange = (event) => {
     const inputName = event.target.value
-    console.log(inputName);
+    //console.log(inputName);
     setNewName(inputName);
   }
 
   const handleNumberChange = (event) => {
     const inputNumber = event.target.value
-    console.log(inputNumber);
+    //console.log(inputNumber);
     setNewNumber(inputNumber);
   }
 
