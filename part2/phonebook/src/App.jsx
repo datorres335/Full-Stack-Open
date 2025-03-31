@@ -1,21 +1,37 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
-const Persons = ({ filteredResults }) => {
+const Persons = ({ filteredResults, setPersons }) => {
   return (
-    <>
-      <ul>
-        {filteredResults.map(person => (
-          <Person key={person.name} name={person.name} number={person.number} />
-        ))}
-      </ul>
-    </>
+    <ul>
+      {filteredResults.map(person => (
+        <Person key={person.id} id={person.id} name={person.name} number={person.number} setPersons={setPersons} /> 
+      ))}
+    </ul>
   )
 }
 
-const Person = ({name, number}) => {
+const DeletePerson = ({ id, name, setPersons }) => {
+  const handleDelete = () => {
+    if (window.confirm(`Delete ${name}?`)) {
+      personService
+      .remove(id)
+      .then(() => {
+        setPersons(prevPersons => prevPersons.filter(person => person.id !== id))
+      })
+    }
+  }
+
   return (
-    <li>{name} {number}</li>
+    <button onClick={handleDelete}>delete</button>
+  )
+}
+
+const Person = ({ id, name, number, setPersons }) => {
+  return (
+    <li>
+      {name} {number} <DeletePerson id={id} name={name} setPersons={setPersons} />
+    </li>
   )
 }
 
@@ -122,7 +138,7 @@ const App = () => {
         handleNumberChange={handleNumberChange} 
       />
       <h3>Numbers</h3>
-      <Persons filteredResults={filteredResults}/>
+      <Persons filteredResults={filteredResults} setPersons={setPersons}/>
     </div>
   )
 }
