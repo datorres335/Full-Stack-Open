@@ -1,0 +1,8 @@
+npm create vite@latest folder-name -- --template react
+
+npx json-server --port 3001 db.json
+
+PART 2
+npm install axios // always run in the project root directory (where the package.json file is found)
+npm install json-server --save-dev //must make a small addition to the "scripts" part in the package.json file: "server": "json-server -p 3001 db.json"
+npm run server
