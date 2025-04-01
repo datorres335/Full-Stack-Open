@@ -1,22 +1,29 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
-const Persons = ({ filteredResults, setPersons }) => {
+const Persons = ({ filteredResults, setPersons, setPopUpMessage }) => {
   return (
     <ul>
       {filteredResults.map(person => (
-        <Person key={person.id} id={person.id} name={person.name} number={person.number} setPersons={setPersons} /> 
+        <Person key={person.id} id={person.id} name={person.name} number={person.number} setPersons={setPersons} setPopUpMessage={setPopUpMessage}/> 
       ))}
     </ul>
   )
 }
 
-const DeletePerson = ({ id, name, setPersons }) => {
+const DeletePerson = ({ id, name, setPersons, setPopUpMessage }) => {
   const handleDelete = () => {
     if (window.confirm(`Delete ${name}?`)) {
       personService
       .remove(id)
       .then(() => {
+        setPersons(prevPersons => prevPersons.filter(person => person.id !== id))
+      })
+      .catch(error => {
+        setPopUpMessage(`Information of ${name} has already been removed from server`)
+        setTimeout(() => {
+          setPopUpMessage(null)
+        }, 5000)
         setPersons(prevPersons => prevPersons.filter(person => person.id !== id))
       })
     }
@@ -27,10 +34,10 @@ const DeletePerson = ({ id, name, setPersons }) => {
   )
 }
 
-const Person = ({ id, name, number, setPersons }) => {
+const Person = ({ id, name, number, setPersons, setPopUpMessage }) => {
   return (
     <li>
-      {name} {number} <DeletePerson id={id} name={name} setPersons={setPersons} />
+      {name} {number} <DeletePerson id={id} name={name} setPersons={setPersons} setPopUpMessage={setPopUpMessage} />
     </li>
   )
 }
@@ -87,7 +94,7 @@ const App = () => {
   const [popUpMessage, setPopUpMessage] = useState(null)
 
   useEffect(() => {
-    console.log('Effect activated')
+    //console.log('Effect activated')
     personService
       .getAll()
       .then(initialPersons => {
@@ -136,6 +143,13 @@ const App = () => {
           setTimeout(() => {
             setPopUpMessage(null)
           }, 5000)
+        })
+        .catch(error => {
+          setPopUpMessage(`Information of ${inputName} has already been removed from server`)
+          setTimeout(() => {
+            setPopUpMessage(null)
+          }, 5000)
+          setPersons(prevPersons => prevPersons.filter(person => person.id !== personToUpdate.id))
         })
       }
     }
@@ -186,7 +200,7 @@ const App = () => {
       />
       <Notification message={popUpMessage} />
       <h3>Numbers</h3>
-      <Persons filteredResults={filteredResults} setPersons={setPersons}/>
+      <Persons filteredResults={filteredResults} setPersons={setPersons} setPopUpMessage={setPopUpMessage}/>
     </div>
   )
 }
