@@ -53,13 +53,38 @@ const PersonForm = ({addNameNumber, newName, handleNameChange, newNumber, handle
       </div>
     </form>
   );
-};
+}
+
+const Notification = ({message}) => {
+  const error = {
+    color: 'green',
+    background: 'lightgrey',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    display: 'inline-block'
+  }
+
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div style={error}>
+      {message}
+    </div>
+  )
+}
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [popUpMessage, setPopUpMessage] = useState(null)
 
   useEffect(() => {
     console.log('Effect activated')
@@ -104,6 +129,14 @@ const App = () => {
             prevPersons.map(person => person.id !== personToUpdate.id ? person : changedPhoneNumber)
           )
         })
+        .then(() => {
+          setNewName('')
+          setNewNumber('')
+          setPopUpMessage(`Updated ${inputName}'s number successfully`)
+          setTimeout(() => {
+            setPopUpMessage(null)
+          }, 5000)
+        })
       }
     }
     else {
@@ -118,6 +151,10 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setPopUpMessage(`Added ${returnedPerson.name} successfully`)
+          setTimeout(() => {
+            setPopUpMessage(null)
+          }, 5000)
         })      
     }
   }
@@ -147,6 +184,7 @@ const App = () => {
         newNumber={newNumber} 
         handleNumberChange={handleNumberChange} 
       />
+      <Notification message={popUpMessage} />
       <h3>Numbers</h3>
       <Persons filteredResults={filteredResults} setPersons={setPersons}/>
     </div>
