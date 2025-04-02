@@ -1,6 +1,44 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY
+//console.log('API Key:', apiKey)
+
+const Weather = ({ country }) => {
+  const [weather, setWeather] = useState(null)
+  const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY
+
+  useEffect(() => {
+    if (country) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${country}&appid=${apiKey}&units=metric`
+      
+      axios
+        .get(url)
+        .then(response => {
+          setWeather(response.data);
+          console.log(response.data);
+          
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }, [country, apiKey])
+
+  if (!weather) {
+    return
+  }
+
+  return (
+    <div>
+      <h2>Weather in {country}</h2>
+      <div>Temperature: {weather.main.temp}°C</div>
+      <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />
+      <div>Wind: {weather.wind.speed} m/s</div>
+    </div>
+  )
+}
+
 const FindCountriesInput = ({ userInput, handleCountryChange }) => {
   return (
     <div>
@@ -53,6 +91,7 @@ const ShowButton = ({ countryName }) => {
             ))}
           </ul>
           <img src={countryDetails.flag} alt={`Flag of ${countryDetails.name}`} />
+          <Weather country={countryDetails.name} />
         </div>
       )}
     </>
@@ -113,6 +152,7 @@ const DisplayResults = ({ filteredResults }) => {
           ))}
         </ul>
         <img src={countryDetails.flag} alt={`Flag of ${countryDetails.name}`} />
+        <Weather country={countryDetails.name} />
       </div>
     )
   }
