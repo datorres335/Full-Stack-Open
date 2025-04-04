@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 app.use(express.json()) //used to convert json data into a javascript object, used in post requests
 
+let morgan = require('morgan')
+app.use(morgan('tiny')) //tiny is a predefined format in morgan, it will log the request method, url, and response status code
+
 let persons = [
     { 
       "id": "1",
@@ -103,3 +106,8 @@ const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({error: 'unknown endpoint'})
+}
+app.use(unknownEndpoint) //this is a middleware function that will handle requests to unknown endpoints, must be placed after all the other route handlers

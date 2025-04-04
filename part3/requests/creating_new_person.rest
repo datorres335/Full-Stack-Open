@@ -3,5 +3,6 @@ Content-Type: application/json
 
 {
     "id": "7",
+    "name": "Test Post",
     "number": "111-11-111111"
 }
