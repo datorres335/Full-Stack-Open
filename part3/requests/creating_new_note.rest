@@ -1,5 +1,5 @@
-POST http://localhost:3001/api/persons //empty lines are important when make a .rest file
-Content-Type: application/json // don't add an empty line before this line
+POST http://localhost:3001/api/persons
+Content-Type: application/json
 
 {
     "id": "7",
