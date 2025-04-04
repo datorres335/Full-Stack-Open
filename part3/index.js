@@ -71,11 +71,21 @@ const generatedId = () => {
     return String(maxId + 1)
 }
 
+const nameExists = (name) => {
+    return persons.some(person => person.name === name)
+}
+
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    if (!body.name) {
+    if (!body.name || !body.number) {
         return response.status(400).json({
-            error: 'name missing'
+            error: 'name or number missing'
+        })
+    }
+
+    if (nameExists(body.name)) {
+        return response.status(400).json({
+            error: 'name must be unique'
         })
     }
 
@@ -84,7 +94,7 @@ app.post('/api/persons', (request, response) => {
         name: body.name,
         number: body.number
     }
-    notes = persons.concat(person)
+    persons = persons.concat(person)
 
     response.json(person)
 })

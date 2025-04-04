@@ -3,6 +3,5 @@ Content-Type: application/json
 
 {
     "id": "7",
-    "name": "Test from creating_new_note.rest",
-    "number": "111-11-1111"
+    "number": "111-11-111111"
 }
