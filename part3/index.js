@@ -3,7 +3,13 @@ const app = express()
 app.use(express.json()) //used to convert json data into a javascript object, used in post requests
 
 let morgan = require('morgan')
-app.use(morgan('tiny')) //tiny is a predefined format in morgan, it will log the request method, url, and response status code
+//app.use(morgan('tiny')) //tiny is a predefined format in morgan, it will log the request method, url, and response status code
+morgan.token('body', (req) => {
+    return req.body ? JSON.stringify(req.body) : ''
+})
+app.use(
+    morgan(':method :url :status :res[content-length] - :response-time ms :body')
+)
 
 let persons = [
     { 
