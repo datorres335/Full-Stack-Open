@@ -1,3 +1,5 @@
+//If you clone a project, run the "npm install" command before starting the application with "npm start" or "npm run dev"
+
 npm create vite@latest folder-name -- --template react
 
 npx json-server --port 3001 db.json
@@ -9,12 +11,12 @@ npm run server
 
 PART 3 --------------------------------------------------------------------------------------------------------------------------------
 npm init
-npm index.js /* create a .js file in the root of the project and add this code to the "script" section in the package.json file as "start": "node 	index.js". You can replace "start" and "index" with what ever words you like */
+npm index.js or npm start /* create a .js file in the root of the project and add this code to the "script" section in the package.json file as "start": 	"node index.js". You can replace "start" and "index" with what ever words you like. This is to start the Node server */
 npm install express
 npm update //updates the dependencies of the project
-npm install //used when working on the same project but on another computer in order to install up-to-date dependencies
+npm install //used when working on the same project but on another computer in order to install up-to-date dependencies. Must be ran in the project's 	root directory
 node --watch index.js /* used to automatically restart the backend server when the code changes (must still refresh the browser manually tho). Add this 	code to the "script" section in the package.json file as "dev": "node --watch index.js" */
-npm run dev //to start your project server in development mode
+npm run dev //to start your project server in development mode (once you add the above script in the package.json file)
 
 Postman plugin or https://www.postman.com/downloads/  /*you can install Postman VSCode plug-in or download locally, useful for testing backend code*/
 REST Client VSCode plugin /*additional tool to postman plugin, visit https://fullstackopen.com/en/part3/node_js_and_express > "The Visual Studio Code 	REST client" on instructions on how to use it */

@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/persons //empty lines are important when make a .rest file
+Content-Type: application/json // don't add an empty line before this line
+
+{
+    "id": "7",
+    "name": "Test from creating_new_note.rest",
+    "number": "111-11-1111"
+}
