@@ -39,7 +39,7 @@ let persons = [
     }
 ]
 
-app.get('/info', (request, response) => {
+app.get('/info', (request, response) => { // http://localhost:3001/info
     const date = new Date()
     const numOfPeople = `Phonebook has info for ${persons.length} people`
     response.send(
@@ -49,11 +49,11 @@ app.get('/info', (request, response) => {
     //response.send('<h1>Whats up world?</h1>')
 })
 
-app.get('/', (request, response) => {
+app.get('/', (request, response) => {  // http://localhost:3001
     response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response) => { // http://localhost:3001/api/persons
     response.json(persons)
 })
 

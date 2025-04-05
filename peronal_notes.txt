@@ -4,12 +4,12 @@ npm create vite@latest folder-name -- --template react
 
 npx json-server --port 3001 db.json
 
-PART 2 --------------------------------------------------------------------------------------------------------------------------------
+PART 2 -----------------------------------------------------------------------------------------------------------------------------------------------
 npm install axios // always run in the project root directory (where the package.json file is found)
 npm install json-server --save-dev //must make a small addition to the "scripts" part in the package.json file: "server": "json-server -p 3001 db.json"
 npm run server
 
-PART 3 --------------------------------------------------------------------------------------------------------------------------------
+PART 3 -----------------------------------------------------------------------------------------------------------------------------------------------
 npm init
 npm index.js or npm start /* create a .js file in the root of the project and add this code to the "script" section in the package.json file as "start": 	"node index.js". You can replace "start" and "index" with what ever words you like. This is to start the Node server */
 npm install express
@@ -20,3 +20,8 @@ npm run dev //to start your project server in development mode (once you add the
 
 Postman plugin or https://www.postman.com/downloads/  /*you can install Postman VSCode plug-in or download locally, useful for testing backend code*/
 REST Client VSCode plugin /*additional tool to postman plugin, visit https://fullstackopen.com/en/part3/node_js_and_express > "The Visual Studio Code 	REST client" on instructions on how to use it */
+
+npm install cors /* install this in your backend repository. Allows requests from other origins (origin = protocol/scheme + host + port = http + 	example.com + 80) */
+npm remove cors //used when you don't need cors middleware anymore
+
+npm run build //used to create a production build optimized for production, run the command at the root of the frontend projects
