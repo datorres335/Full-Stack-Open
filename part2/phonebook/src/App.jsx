@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
 const Persons = ({ filteredResults, setPersons, setPopUpMessage }) => {
+  if (!Array.isArray(filteredResults)) {
+    return <p>No data available</p>;
+  }
+
   return (
     <ul>
       {filteredResults.map(person => (
