@@ -24,4 +24,4 @@ REST Client VSCode plugin /*additional tool to postman plugin, visit https://ful
 npm install cors /* install this in your backend repository. Allows requests from other origins (origin = protocol/scheme + host + port = http + 	example.com + 80) */
 npm remove cors //used when you don't need cors middleware anymore
 
-npm run build //used to create a production build optimized for production, run the command at the root of the FRONTEND directory, then you need to 	copy the newly generated directory "dist" into the root of your BACKEND directory (you can use the command "cp -r dist ../../part3" for quick 	copying)
+npm run build /* used to create a production build optimized for production, run the command at the root of the FRONTEND directory, then you need to 	copy the newly generated directory "dist" into the root of your BACKEND directory (you can use the command "cp -r dist ../../part3" for quick 	copying) */s
