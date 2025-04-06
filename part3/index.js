@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 app.use(express.json()) //used to convert json data into a javascript object, used in post requests
+app.use(express.static('dist')) //this will serve the static files from the 'dist' folder, so that the frontend can be served from the same server
 
 const cors = require('cors')
 app.use(cors())
