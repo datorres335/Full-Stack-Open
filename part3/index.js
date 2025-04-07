@@ -1,3 +1,4 @@
+require('dotenv').config() // this will load the environment variables from the .env file
 const express = require('express')
 const app = express()
 app.use(express.json()) //used to convert json data into a javascript object, used in post requests
@@ -5,6 +6,8 @@ app.use(express.static('dist')) //this will serve the static files from the 'dis
 
 const cors = require('cors')
 app.use(cors())
+
+const Person = require('./models/person') //used to connect to the MongoDB database and use the Person model,
 
 const morgan = require('morgan')
 //app.use(morgan('tiny')) //tiny is a predefined format in morgan, it will log the request method, url, and response status code
