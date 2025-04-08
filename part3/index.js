@@ -46,51 +46,45 @@ let persons = [
     }
 ]
 
-app.get('/info', (request, response) => { // http://localhost:3001/info
+app.get('/info', (request, response, next) => { // http://localhost:3001/info
     const date = new Date()
-    const numOfPeople = `Phonebook has info for ${persons.length} people`
-    response.send(
-        `<p>${numOfPeople}<p/>
-        <p>${date}</p>`
-    )
-    //response.send('<h1>Whats up world?</h1>')
+    Person.countDocuments({})
+        .then(count => {
+            const numOfPeople = `Phonebook has info for ${count} people`
+            response.send(
+                `<p>${numOfPeople}</p>
+                <p>${date}</p>`
+            )
+        })
+        .catch(error => next(error))
 })
 
 app.get('/', (request, response) => {  // http://localhost:3001
     response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/persons', (request, response) => { // http://localhost:3001/api/persons
-    //response.json(persons)
-    Person.find({}).then(persons => {      
-        response.json(persons)
-    }).catch(error => {
-        console.log('Error fetching data from mongoDB:', error.message)
-        response.status(500).json({
-            error: 'Failed to fetch data from the database'
+app.get('/api/persons', (request, response, next) => { // http://localhost:3001/api/persons
+    Person.find({})
+        .then(persons => {      
+            response.json(persons)
         })
-    })
+        .catch(error => next(error))
 })
 
 //this allows users to get the info of a specific person by their id
-app.get('/api/persons/:id', (request, response) => {
-    // const id = request.params.id
-    // const person = persons.find(person => person.id === id)
-    // if (person) {
-    //     response.json(person)
-    // } else {
-    //     response.status(404).end()
-    // }
-
-    Person.findById(request.params.id).then(person => {
-        response.json(person)
-    })
+app.get('/api/persons/:id', (request, response, next) => {
+    Person.findById(request.params.id)
+        .then(person => {
+            if (persons) {
+                response.json(person)
+            } else {
+                response.status(404).end()
+            }
+        })
+        .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
-    // const id = request.params.id
-    // persons = persons.filter(person => person.id !== id)
-    // response.status(204).end()
     Person.findByIdAndDelete(request.params.id)
         .then(result => {
             response.status(204).end()
@@ -98,17 +92,11 @@ app.delete('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-// const generatedId = () => {
-//     const maxId = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - 6 + 1)) + 6;
-
-//     return String(maxId + 1)
-// }
-
 const nameExists = (name) => {
     return persons.some(person => person.name === name)
 }
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
     if (!body.name || !body.number) {
         return response.status(400).json({
@@ -122,22 +110,17 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    // const person = {
-    //     id: generatedId(),
-    //     name: body.name,
-    //     number: body.number
-    // }
-    // persons = persons.concat(person)
-
-    // response.json(person)
     const person = new Person({
         name: body.name,
         number: body.number,
     })
 
-    person.save().then(savedNote => {
-        response.json(savedNote)
-    })
+    person
+        .save()
+        .then(savedNote => {
+            response.json(savedNote)
+        })
+        .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {

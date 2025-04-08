@@ -2,6 +2,6 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Ensuring post to mongodb works",
+    "name": "post test from rest client",
     "number": "222-222-2222"
 }
