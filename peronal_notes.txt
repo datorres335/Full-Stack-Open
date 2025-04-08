@@ -25,3 +25,8 @@ npm install cors /* install this in your backend repository. Allows requests fro
 npm remove cors //used when you don't need cors middleware anymore
 
 npm run build /* used to create a production build optimized for production, run the command at the root of the FRONTEND directory, then you need to 	copy the newly generated directory "dist" into the root of your BACKEND directory (you can use the command "cp -r dist ../../part3" for quick 	copying) */s
+
+npm install mongoose //using mongoose API instead of MongoDB directly, install this in the backend directory
+node mongo.js yourPassword //used to test the temporary MongoDB file created to test our database, replace "yourPassword" with the password you created 	for the database USER you created (not the MongoDB Atlas account password you created). Refer to your mongo.js file to see how this file works 	when you run it in the terminal
+
+npm install dotenv //needed to define environment variables. Need to create a ".env" file at the root of the project to create these environment vars
