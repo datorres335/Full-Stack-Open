@@ -2,7 +2,6 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "id": "7",
-    "name": "Test Post",
-    "number": "111-11-111111"
+    "name": "Ensuring post to mongodb works",
+    "number": "222-222-2222"
 }

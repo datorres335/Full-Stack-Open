@@ -1,3 +1,8 @@
+/*
+    NOTE!!!!!!!!!
+    THIS IS SAMPLE CODE FOR MONGODB USAGE, 
+    refer to person.js for actual project implementation of mongoDB
+*/
 const mongoose = require('mongoose')
 
 if (process.argv.length < 3) {
@@ -41,3 +46,8 @@ if (process.argv.length === 3) {
 } else {
     console.log('Invalid number of arguments.')
 }
+/*
+    NOTE!!!!!!!!!
+    THIS IS SAMPLE CODE FOR MONGODB USAGE, 
+    refer to person.js for actual project implementation of mongoDB
+*/
