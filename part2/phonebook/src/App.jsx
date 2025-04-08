@@ -24,6 +24,8 @@ const DeletePerson = ({ id, name, setPersons, setPopUpMessage }) => {
         setPersons(prevPersons => prevPersons.filter(person => person.id !== id))
       })
       .catch(error => {
+        console.log(error.response.data.error)
+        
         setPopUpMessage(`Information of ${name} has already been removed from server`)
         setTimeout(() => {
           setPopUpMessage(null)
@@ -149,6 +151,8 @@ const App = () => {
           }, 5000)
         })
         .catch(error => {
+          console.log(error.response.data.error)
+          
           setPopUpMessage(`Information of ${inputName} has already been removed from server`)
           setTimeout(() => {
             setPopUpMessage(null)
@@ -170,6 +174,13 @@ const App = () => {
           setNewName('')
           setNewNumber('')
           setPopUpMessage(`Added ${returnedPerson.name} successfully`)
+          setTimeout(() => {
+            setPopUpMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          console.log(error.response.data.error)
+          setPopUpMessage(`${error.response.data.error}`)
           setTimeout(() => {
             setPopUpMessage(null)
           }, 5000)

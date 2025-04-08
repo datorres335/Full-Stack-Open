@@ -30,3 +30,6 @@ npm install mongoose //using mongoose API instead of MongoDB directly, install t
 node mongo.js yourPassword //used to test the temporary MongoDB file created to test our database, replace "yourPassword" with the password you created 	for the database USER you created (not the MongoDB Atlas account password you created). Refer to your mongo.js file to see how this file works 	when you run it in the terminal
 
 npm install dotenv //needed to define environment variables. Need to create a ".env" file at the root of the project to create these environment vars
+
+npm run build:ui // custom script, must be inside of the working directory where the package.json file is located, MUST RUN IN GIT BASH TERMINAL
+npm run deploy:full // custom script, must be inside of the working directory where the package.json file is located, MUST RUN IN GIT BASH TERMINAL
