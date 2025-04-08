@@ -59,7 +59,7 @@ app.get('/info', (request, response, next) => { // http://localhost:3001/info
         .catch(error => next(error))
 })
 
-app.get('/', (request, response) => {  // http://localhost:3001
+app.get('/', (request, response) => {  // not used due to the static files used by app.use(express.static('dist'))
     response.send('<h1>Hello World!</h1>')
 })
 
@@ -92,7 +92,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-const nameExists = (name) => {
+const nameExists = (name) => { // TODO: NEED TO UPDATE THIS TO USE MONGODB INSTEAD OF persons ARRAY
     return persons.some(person => person.name === name)
 }
 
@@ -128,7 +128,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 
     Person.findByIdAndUpdate(request.params.id)
         .then(person => {
-            if (!persons) {
+            if (!person) {
                 return response.status(404).end()
             }
 
