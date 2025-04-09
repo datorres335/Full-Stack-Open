@@ -33,3 +33,9 @@ npm install dotenv //needed to define environment variables. Need to create a ".
 
 npm run build:ui // custom script, must be inside of the working directory where the package.json file is located, MUST RUN IN GIT BASH TERMINAL
 npm run deploy:full // custom script, must be inside of the working directory where the package.json file is located, MUST RUN IN GIT BASH TERMINAL
+
+npm install eslint @eslint/js --save-dev // tool used to check for errors in javascript while in development mode
+npx eslint --init // needed to initialize the eslint tool, choose these answers: syntax, commonjs, none, javascript, node, yes, npm. Configuration will 	then be saved at eslint.config.mjs. Refer to part3/eslint.config.mjs on how to reformat the file
+npm install --save-dev @stylistic/eslint-plugin-js // a plugin that defines a set of code style-related rules
+npx eslint index.js // inspects and validates a file like index.js
+npm run lint // custom script, refer to part3/package.json for implemintation details
